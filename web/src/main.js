@@ -4,12 +4,11 @@ import { EpgStore, fmtTime } from './lib/epg.js';
 import { Player } from './lib/player.js';
 import { getProxyBase, setProxyBase } from './lib/proxy.js';
 
-const REPO = 'https://raw.githubusercontent.com/dhasap/okmansyahtv/main';
 const SOURCES = {
-  ott:  { url: `${REPO}/okmansyahtv-ott.m3u`, label: 'OTT (kompatibel)' },
-  full: { url: `${REPO}/okmansyahtv.m3u`,     label: 'Lengkap (DRM)' },
+  ott:  { url: './okmansyahtv-ott.m3u', label: 'OTT (kompatibel)' },
+  full: { url: './okmansyahtv.m3u',     label: 'Lengkap (DRM)' },
 };
-const EPG_URL = `${REPO}/epg.xml`;
+const EPG_URL = './epg.xml';
 const CACHE_TTL = 60 * 60 * 1000;
 const PAGE = 120; // render bertahap
 
@@ -84,7 +83,11 @@ function wireImgFallback(root) {
 /* ---------- playlist ---------- */
 async function fetchPlaylist(mode) {
   const key = `okman_pl_${mode}`;
-  try { const c = JSON.parse(localStorage.getItem(key) || 'null'); if (c && Date.now() - c.t < CACHE_TTL && c.text) return c.text; } catch {}
+  try {
+    const c = JSON.parse(localStorage.getItem(key) || 'null');
+    if (c && Date.now() - c.t < CACHE_TTL && c.text) return c.text;
+  } catch {}
+
   const res = await fetch(SOURCES[mode].url, { cache: 'no-store' });
   if (!res.ok) throw new Error('Gagal memuat playlist (HTTP ' + res.status + ')');
   const text = await res.text();
@@ -139,9 +142,12 @@ function setActiveNav(h) {
 /* ---------- filtering ---------- */
 function visibleChannels() {
   const q = state.query.trim().toLowerCase();
+  const indoGroups = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
+
   return state.channels.filter((c) => {
     if (state.filterGroup === '__fav') { if (!isFav(c.id)) return false; }
     else if (state.filterGroup === '__search_all') { /* all ok */ }
+    else if (state.filterGroup === 'indo_all') { if (!indoGroups.includes(c.group)) return false; }
     else if (state.filterGroup !== 'all' && c.group !== state.filterGroup) return false;
     if (q && !`${c.name} ${c.group}`.toLowerCase().includes(q)) return false;
     return true;
@@ -182,24 +188,41 @@ function renderHome() {
 function renderCountryGrid() {
   const favCount = state.favorites.length;
 
-  // Categorize groups into Countries and Others
   const countries = [];
   const others = [];
 
+  // Mapping grup Indonesia yang lebih luas
+  const indoGroups = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
+
   state.groups.forEach(g => {
-    if (COUNTRY_FLAGS[g.name]) countries.push(g);
-    else others.push(g);
+    if (COUNTRY_FLAGS[g.name] || indoGroups.includes(g.name)) {
+      if (indoGroups.includes(g.name)) {
+        let indo = countries.find(c => c.name === 'Indonesia');
+        if (!indo) {
+          indo = { name: 'Indonesia', count: 0 };
+          countries.push(indo);
+        }
+        indo.count += g.count;
+      } else {
+        countries.push(g);
+      }
+    } else {
+      others.push(g);
+    }
   });
+
+  // Urutkan agar Indonesia selalu pertama
+  countries.sort((a, b) => a.name === 'Indonesia' ? -1 : 1);
 
   $('#app').innerHTML = `
     <div class="main">
       <h2 class="page-title">Pilih Negara</h2>
-      <p class="page-sub">Pilih negara untuk melihat daftar channel TV</p>
+      <p class="page-sub">Klik bendera untuk menonton siaran TV</p>
       <div class="country-grid">
         ${countries.map(g => `
-          <button class="country-card" data-group="${esc(g.name)}">
+          <button class="country-card" data-group="${g.name === 'Indonesia' ? 'indo_all' : esc(g.name)}">
             <div class="flag-wrap">
-              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name]}.png" alt="${esc(g.name)}">
+              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name] || 'id'}.png" alt="${esc(g.name)}">
             </div>
             <span>${esc(g.name)}</span>
             <small>${g.count} Channel</small>
@@ -207,7 +230,7 @@ function renderCountryGrid() {
         `).join('')}
       </div>
 
-      <h2 class="page-title" style="margin-top:40px">Kategori Lain</h2>
+      <h2 class="page-title" style="margin-top:40px">Kategori Konten</h2>
       <div class="country-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))">
         ${favCount ? `
           <button class="country-card" data-group="__fav">
