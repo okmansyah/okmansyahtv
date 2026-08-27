@@ -31,15 +31,83 @@ const CATEGORY_ICONS = {
   'Kids': '👶',
   'Movies': '🎬',
   'News': '📰',
-  'Entertainment': '🎭',
-  'Documentary': '📚',
-  'Music': '🎵',
-  'Lokal': '🏠',
-  'Regional': '📍',
-  'Nasional': '📺'
+  'VOD INDO': '🍿',
+  'Internet Radio': '📻'
 };
 
-const state = {
+// Grup yang akan digabung ke bendera Indonesia
+const INDO_GROUPS = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
+
+function renderCountryGrid() {
+  const favCount = state.favorites.length;
+  const countries = [];
+  const others = [];
+
+  state.groups.forEach(g => {
+    // 1. Cek apakah ini grup Indonesia
+    if (INDO_GROUPS.includes(g.name)) {
+      let indo = countries.find(c => c.name === 'Indonesia');
+      if (!indo) {
+        indo = { name: 'Indonesia', count: 0 };
+        countries.push(indo);
+      }
+      indo.count += g.count;
+    }
+    // 2. Cek apakah ini negara ASEAN lainnya
+    else if (COUNTRY_FLAGS[g.name]) {
+      countries.push(g);
+    }
+    // 3. Cek apakah ini kategori konten (bukan nama negara asing)
+    else if (CATEGORY_ICONS[g.name]) {
+      others.push(g);
+    }
+    // Selain itu (US, Korea, Brazil, dll) DIABAIKAN/DIHAPUS dari tampilan
+  });
+
+  // Urutkan abjad, tapi Indonesia tetap pertama
+  countries.sort((a, b) => a.name === 'Indonesia' ? -1 : (b.name === 'Indonesia' ? 1 : a.name.localeCompare(b.name)));
+
+  $('#app').innerHTML = `
+    <div class="main">
+      <h2 class="page-title">Pilih Negara ASEAN</h2>
+      <p class="page-sub">Klik bendera untuk menonton siaran TV lokal negara Asia Tenggara</p>
+      <div class="country-grid">
+        ${countries.map(g => `
+          <button class="country-card" data-group="${g.name === 'Indonesia' ? 'indo_all' : esc(g.name)}">
+            <div class="flag-wrap">
+              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name]}.png" alt="${esc(g.name)}">
+            </div>
+            <span>${esc(g.name)}</span>
+            <small>${g.count} Channel</small>
+          </button>
+        `).join('')}
+      </div>
+
+      ${others.length || favCount ? `<h2 class="page-title" style="margin-top:40px">Kategori Konten</h2>` : ''}
+      <div class="country-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))">
+        ${favCount ? `
+          <button class="country-card" data-group="__fav">
+            <div class="flag-wrap icon-wrap">★</div>
+            <span>Favorit</span>
+            <small>${favCount} Channel</small>
+          </button>` : ''}
+        ${others.map(g => `
+          <button class="country-card" data-group="${esc(g.name)}">
+            <div class="flag-wrap icon-wrap">${CATEGORY_ICONS[g.name]}</div>
+            <span>${esc(g.name)}</span>
+            <small>${g.count} Channel</small>
+          </button>
+        `).join('')}
+      </div>
+    </div>`;
+
+  $$('.country-card').forEach(b => {
+    b.addEventListener('click', () => {
+      state.filterGroup = b.dataset.group;
+      renderHome();
+    });
+  });
+}
   mode: 'ott',
   channels: [],
   byId: new Map(),
@@ -142,13 +210,18 @@ function setActiveNav(h) {
 /* ---------- filtering ---------- */
 function visibleChannels() {
   const q = state.query.trim().toLowerCase();
-  const indoGroups = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
 
   return state.channels.filter((c) => {
     if (state.filterGroup === '__fav') { if (!isFav(c.id)) return false; }
     else if (state.filterGroup === '__search_all') { /* all ok */ }
-    else if (state.filterGroup === 'indo_all') { if (!indoGroups.includes(c.group)) return false; }
+    else if (state.filterGroup === 'indo_all') { if (!INDO_GROUPS.includes(c.group)) return false; }
     else if (state.filterGroup !== 'all' && c.group !== state.filterGroup) return false;
+
+    // Keamanan tambahan: jangan tampilkan channel non-SEA kecuali sedang search
+    if (state.filterGroup !== '__search_all') {
+       if (!COUNTRY_FLAGS[c.group] && !INDO_GROUPS.includes(c.group) && !CATEGORY_ICONS[c.group]) return false;
+    }
+
     if (q && !`${c.name} ${c.group}`.toLowerCase().includes(q)) return false;
     return true;
   });
