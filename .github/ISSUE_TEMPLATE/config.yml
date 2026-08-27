@@ -1,8 +1,8 @@
 blank_issues_enabled: true
 contact_links:
   - name: "📖 Cara pakai & FAQ"
-    url: https://github.com/dhasap/okmansyahtv#-faq
+    url: https://github.com/okmansyah/okmansyahtv#-faq
     about: "Baca dulu FAQ — banyak pertanyaan (mis. 'siaran tidak didukung') sudah dijawab di sini."
   - name: "⚠️ Takedown / DMCA"
-    url: https://github.com/dhasap/okmansyahtv/blob/main/DISCLAIMER.md
+    url: https://github.com/okmansyah/okmansyahtv/blob/main/DISCLAIMER.md
     about: "Pemegang hak cipta yang ingin link dihapus, lihat di sini."

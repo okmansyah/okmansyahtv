@@ -9,7 +9,7 @@ Keduanya gratis.
 
 **Lewat dashboard (paling gampang):**
 1. Cloudflare Dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
-2. Pilih repo `dhasap/okmansyahtv`.
+2. Pilih repo `okmansyah/okmansyahtv`.
 3. Build settings:
    - **Framework preset:** `None`
    - **Build command:** *(kosongkan)*

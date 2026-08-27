@@ -7,7 +7,7 @@
 set -e
 
 TOKEN=""
-REPO="dhasap/okmansyahtv"
+REPO="okmansyah/okmansyahtv"
 TARGET_FILE="okmansyahtv.m3u"
 EPG_OUTPUT="epg.xml"
 

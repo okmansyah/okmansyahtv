@@ -497,7 +497,7 @@ def make_channel_element(info: PlaylistChannel) -> ET.Element:
     if info.logo:
         ET.SubElement(channel, "icon", {"src": info.logo})
     url = ET.SubElement(channel, "url")
-    url.text = "https://github.com/dhasap/okmansyahtv"
+    url.text = "https://github.com/okmansyah/okmansyahtv"
     return channel
 
 
@@ -661,7 +661,7 @@ def generate(m3u_path: Path, output_path: Path, source_paths: list[Path]) -> dic
         "tv",
         {
             "generator-info-name": "okmansyahtv-custom-epg",
-            "generator-info-url": "https://github.com/dhasap/okmansyahtv",
+            "generator-info-url": "https://github.com/okmansyah/okmansyahtv",
         },
     )
 

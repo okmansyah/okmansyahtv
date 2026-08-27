@@ -4,7 +4,7 @@ import { EpgStore, fmtTime } from './lib/epg.js';
 import { Player } from './lib/player.js';
 import { getProxyBase, setProxyBase } from './lib/proxy.js';
 
-const REPO = 'https://raw.githubusercontent.com/dhasap/okmansyahtv/main';
+const REPO = 'https://raw.githubusercontent.com/okmansyah/okmansyahtv/main';
 const SOURCES = {
   ott:  { url: `${REPO}/okmansyahtv-ott.m3u`, label: 'OTT (kompatibel)' },
   full: { url: `${REPO}/okmansyahtv.m3u`,     label: 'Lengkap (DRM)' },
@@ -89,11 +89,31 @@ async function fetchPlaylist(mode) {
     if (c && Date.now() - c.t < CACHE_TTL && c.text) return c.text;
   } catch {}
 
-  const res = await fetch(SOURCES[mode].url, { cache: 'no-store' });
-  if (!res.ok) throw new Error('Gagal memuat playlist (HTTP ' + res.status + ')');
-  const text = await res.text();
-  try { localStorage.setItem(key, JSON.stringify({ t: Date.now(), text })); } catch {}
-  return text;
+  // Coba URL baru dulu (okmansyahtv)
+  const primaryUrl = SOURCES[mode].url;
+  // Fallback ke URL lama (dhanytv) jika yang baru belum aktif
+  const fallbackUrl = primaryUrl.replace('/okmansyahtv/', '/dhanytv/');
+
+  try {
+    const res = await fetch(primaryUrl, { cache: 'no-store' });
+    if (res.ok) {
+      const text = await res.text();
+      localStorage.setItem(key, JSON.stringify({ t: Date.now(), text }));
+      return text;
+    }
+    throw new Error('404');
+  } catch (err) {
+    // Jika gagal, coba ambil dari repo lama 'dhanytv'
+    try {
+      const res = await fetch(fallbackUrl, { cache: 'no-store' });
+      if (res.ok) {
+        const text = await res.text();
+        return text;
+      }
+    } catch (e) {}
+
+    throw new Error(`Gagal memuat playlist. Pastikan repo GitHub sudah di-rename ke 'okmansyahtv' dan file sudah di-push.`);
+  }
 }
 function indexChannels() {
   state.byId = new Map(state.channels.map((c) => [c.id, c]));

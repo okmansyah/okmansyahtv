@@ -4,9 +4,9 @@
 
 **Playlist IPTV Asia Tenggara (ASEAN) gratis** dengan channel live TV dari Indonesia, Malaysia, Singapura, Thailand, Vietnam, Filipina, Brunei, dan lainnya. Dilengkapi **EPG XMLTV** lengkap dan **update otomatis tiap hari**. Siap pakai di **TiviMate, Kodi, VLC, OTT Navigator, Android TV & Smart TV**.
 
-[![Auto Update](https://img.shields.io/github/actions/workflow/status/dhasap/okmansyahtv/auto-update.yml?label=auto-update&logo=githubactions&logoColor=white)](https://github.com/dhasap/okmansyahtv/actions)
-[![Last Commit](https://img.shields.io/github/last-commit/dhasap/okmansyahtv?logo=git&logoColor=white)](https://github.com/dhasap/okmansyahtv/commits/main)
-[![Stars](https://img.shields.io/github/stars/dhasap/okmansyahtv?style=flat&logo=github)](https://github.com/dhasap/okmansyahtv/stargazers)
+[![Auto Update](https://img.shields.io/github/actions/workflow/status/okmansyah/okmansyahtv/auto-update.yml?label=auto-update&logo=githubactions&logoColor=white)](https://github.com/okmansyah/okmansyahtv/actions)
+[![Last Commit](https://img.shields.io/github/last-commit/okmansyah/okmansyahtv?logo=git&logoColor=white)](https://github.com/okmansyah/okmansyahtv/commits/main)
+[![Stars](https://img.shields.io/github/stars/okmansyah/okmansyahtv?style=flat&logo=github)](https://github.com/okmansyah/okmansyahtv/stargazers)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
 🇮🇩 🇲🇾 🇸🇬 🇹🇭 🇻🇳 🇵🇭 🇧🇳 🇰🇭 🇱🇦 🇲🇲 🇹🇱
@@ -55,9 +55,9 @@ Salin salah satu link di bawah ke IPTV player kamu:
 
 | Link | Keterangan |
 |------|------------|
-| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv.m3u` | ⭐ Playlist utama (lengkap, termasuk DASH/DRM) |
-| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv-ott.m3u` | 📺 Playlist OTT-friendly / Smart TV (non-DASH/DRM, HLS saja) |
-| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml` | 🗓️ EPG XMLTV (jadwal acara) |
+| `https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/okmansyahtv.m3u` | ⭐ Playlist utama (lengkap, termasuk DASH/DRM) |
+| `https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/okmansyahtv-ott.m3u` | 📺 Playlist OTT-friendly / Smart TV (non-DASH/DRM, HLS saja) |
+| `https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/epg.xml` | 🗓️ EPG XMLTV (jadwal acara) |
 
 **Short link:** [`bit.ly/okmansyahtv`](https://bit.ly/okmansyahtv) · [`bit.ly/okmansyahtv-ott`](https://bit.ly/okmansyahtv-ott) · [`bit.ly/okmansyahtv-epg`](https://bit.ly/okmansyahtv-epg)
 
@@ -87,11 +87,11 @@ Salin salah satu link di bawah ke IPTV player kamu:
 
 1. Buka player → **Add Playlist** / **Tambah Playlist**
 2. Pilih **M3U URL**
-3. Paste: `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv.m3u`
+3. Paste: `https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/okmansyahtv.m3u`
 4. Simpan, tunggu loading selesai.
 
 EPG sudah tertanam di header playlist. Kalau jadwal tidak muncul, tambah URL EPG manual:
-`https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml`
+`https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/epg.xml`
 
 ### 3. Channel "tidak didukung"?
 
@@ -198,7 +198,7 @@ Trigger manual: tab **Actions** → **Auto Update IPTV Playlist** → **Run work
 ## 🛠️ Development
 
 ```bash
-git clone https://github.com/dhasap/okmansyahtv.git && cd okmansyahtv
+git clone https://github.com/okmansyah/okmansyahtv.git && cd okmansyahtv
 
 # Merge dari source
 python3 update-script/merge_source.py <source.m3u> --target okmansyahtv.m3u
@@ -295,16 +295,16 @@ Repo ini **tidak meng-host, meng-upload, atau menyimpan konten media apa pun**. 
 
 Star membantu lebih banyak orang menemukan playlist IPTV Indonesia gratis ini.
 
-<a href="https://star-history-virid.vercel.app/?repo=dhasap/okmansyahtv">
+<a href="https://star-history-virid.vercel.app/?repo=okmansyah/okmansyahtv">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=light" />
-   <img alt="Star History Chart" src="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=light" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history-virid.vercel.app/chart?repo=okmansyah/okmansyahtv&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history-virid.vercel.app/chart?repo=okmansyah/okmansyahtv&theme=light" />
+   <img alt="Star History Chart" src="https://star-history-virid.vercel.app/chart?repo=okmansyah/okmansyahtv&theme=light" />
  </picture>
 </a>
 
 **Kata kunci:** IPTV Indonesia gratis · IPTV Asia Tenggara · ASEAN IPTV · playlist M3U Indonesia · M3U8 TV Indonesia · TV online gratis · EPG XMLTV Indonesia · IPTV Smart TV · TiviMate Indonesia · Kodi IPTV · VLC IPTV playlist · streaming bola Indonesia
 
-Made with ❤️ for Indonesian IPTV enthusiasts · [github.com/dhasap/okmansyahtv](https://github.com/dhasap/okmansyahtv)
+Made with ❤️ for Indonesian IPTV enthusiasts · [github.com/okmansyah/okmansyahtv](https://github.com/okmansyah/okmansyahtv)
 
 </div>

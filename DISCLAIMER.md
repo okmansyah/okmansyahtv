@@ -21,4 +21,4 @@
 
 ## 📩 Takedown / DMCA
 
-If you are a rights holder and want a link removed, please open a GitHub Issue or contact the repo owner via the GitHub profile [@dhasap](https://github.com/dhasap). Provide the channel name and the offending entry; it will be removed promptly.
+If you are a rights holder and want a link removed, please open a GitHub Issue or contact the repo owner via the GitHub profile [@okmansyah](https://github.com/okmansyah). Provide the channel name and the offending entry; it will be removed promptly.

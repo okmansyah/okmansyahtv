@@ -29,7 +29,7 @@ PROP_PREFIXES = (
     "#EXT-X-",
 )
 
-DEFAULT_HEADER = '#EXTM3U url-tvg="https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml"'
+DEFAULT_HEADER = '#EXTM3U url-tvg="https://raw.githubusercontent.com/okmansyah/okmansyahtv/main/epg.xml"'
 DENS_REFERRER = "https://www.dens.tv/"
 DENS_ORIGIN = "https://www.dens.tv"
 DENS_REFERRER_PROP = f"#EXTVLCOPT:http-referrer={DENS_REFERRER}"
