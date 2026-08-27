@@ -5,7 +5,7 @@
    - Playlist/EPG (raw.githubusercontent) → network-first (data harus fresh), fallback cache.
    - Stream (.ts/.m4s/.m3u8/.mpd) & proxy → JANGAN di-cache (live, besar).
 */
-const VERSION = 'okman-v1';
+const VERSION = 'okman-v2';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-rt`;
 
