@@ -4,11 +4,12 @@ import { EpgStore, fmtTime } from './lib/epg.js';
 import { Player } from './lib/player.js';
 import { getProxyBase, setProxyBase } from './lib/proxy.js';
 
+const REPO = 'https://raw.githubusercontent.com/dhasap/okmansyahtv/main';
 const SOURCES = {
-  ott:  { url: './okmansyahtv-ott.m3u', label: 'OTT (kompatibel)' },
-  full: { url: './okmansyahtv.m3u',     label: 'Lengkap (DRM)' },
+  ott:  { url: `${REPO}/okmansyahtv-ott.m3u`, label: 'OTT (kompatibel)' },
+  full: { url: `${REPO}/okmansyahtv.m3u`,     label: 'Lengkap (DRM)' },
 };
-const EPG_URL = './epg.xml';
+const EPG_URL = `${REPO}/epg.xml`;
 const CACHE_TTL = 60 * 60 * 1000;
 const PAGE = 120; // render bertahap
 

@@ -8,8 +8,8 @@ set -e
 
 TOKEN=""
 REPO="dhasap/okmansyahtv"
-TARGET_FILE="web/okmansyahtv.m3u"
-EPG_OUTPUT="web/epg.xml"
+TARGET_FILE="okmansyahtv.m3u"
+EPG_OUTPUT="epg.xml"
 
 # Colors
 RED='\033[0;31m'
@@ -138,14 +138,14 @@ fi
 # Step 5: Normalize playlist and generate OTT-friendly variant
 echo -e "${YELLOW}[6/8] Cleaning playlist syntax & generating OTT variant...${NC}"
 if [ -f "update-script/cleanup_playlist.py" ]; then
-    python3 update-script/cleanup_playlist.py "$TARGET_FILE" --write --ott-output web/okmansyahtv-ott.m3u --check "${SANITIZE_ARG[@]}"
+    python3 update-script/cleanup_playlist.py "$TARGET_FILE" --write --ott-output okmansyahtv-ott.m3u --check "${SANITIZE_ARG[@]}"
 else
     echo -e "${RED}ERROR: update-script/cleanup_playlist.py tidak ditemukan!${NC}"
     exit 1
 fi
 
 AFTER=$(grep -c '#EXTINF' "$TARGET_FILE" || echo "0")
-OTT_COUNT=$(grep -c '#EXTINF' web/okmansyahtv-ott.m3u 2>/dev/null || echo "0")
+OTT_COUNT=$(grep -c '#EXTINF' okmansyahtv-ott.m3u 2>/dev/null || echo "0")
 echo -e "  ${GREEN}Channel: $BEFORE → $AFTER | OTT: $OTT_COUNT${NC}"
 
 # Step 6: Generate Custom EPG (multi-source)
@@ -210,10 +210,10 @@ echo ""
 echo -e "${GREEN}============================================"
 echo "  Update Selesai!"
 echo "============================================"
-echo -e "  Channel  : $(grep -c '#EXTINF' web/okmansyahtv.m3u 2>/dev/null || echo 'N/A')"
-echo -e "  OTT Ch   : $(grep -c '#EXTINF' web/okmansyahtv-ott.m3u 2>/dev/null || echo 'N/A')"
-echo -e "  EPG Ch   : $(grep -c '<channel ' web/epg.xml 2>/dev/null || echo 'N/A')"
-echo -e "  EPG Size : $(du -h web/epg.xml 2>/dev/null | cut -f1 || echo 'N/A')"
+echo -e "  Channel  : $(grep -c '#EXTINF' okmansyahtv.m3u 2>/dev/null || echo 'N/A')"
+echo -e "  OTT Ch   : $(grep -c '#EXTINF' okmansyahtv-ott.m3u 2>/dev/null || echo 'N/A')"
+echo -e "  EPG Ch   : $(grep -c '<channel ' epg.xml 2>/dev/null || echo 'N/A')"
+echo -e "  EPG Size : $(du -h epg.xml 2>/dev/null | cut -f1 || echo 'N/A')"
 echo -e "============================================${NC}"
 
 # Cleanup
