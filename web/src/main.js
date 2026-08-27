@@ -89,10 +89,8 @@ async function fetchPlaylist(mode) {
     if (c && Date.now() - c.t < CACHE_TTL && c.text) return c.text;
   } catch {}
 
-  // Coba URL baru dulu (okmansyahtv)
   const primaryUrl = SOURCES[mode].url;
-  // Fallback ke URL lama (dhanytv) jika yang baru belum aktif
-  const fallbackUrl = primaryUrl.replace('/okmansyahtv/', '/dhanytv/');
+  const fallbackUrl = primaryUrl.replace('/okmansyah/okmansyahtv/', '/dhasap/dhanytv/');
 
   try {
     const res = await fetch(primaryUrl, { cache: 'no-store' });
@@ -103,15 +101,10 @@ async function fetchPlaylist(mode) {
     }
     throw new Error('404');
   } catch (err) {
-    // Jika gagal, coba ambil dari repo lama 'dhanytv'
     try {
       const res = await fetch(fallbackUrl, { cache: 'no-store' });
-      if (res.ok) {
-        const text = await res.text();
-        return text;
-      }
+      if (res.ok) return await res.text();
     } catch (e) {}
-
     throw new Error(`Gagal memuat playlist. Pastikan repo GitHub sudah di-rename ke 'okmansyahtv' dan file sudah di-push.`);
   }
 }
@@ -170,7 +163,7 @@ function visibleChannels() {
     else if (state.filterGroup === 'indo_all') { if (!INDO_GROUPS.includes(c.group)) return false; }
     else if (state.filterGroup !== 'all' && c.group !== state.filterGroup) return false;
 
-    // Strict ASEAN filter unless searching
+    // ASEAN Only strict filter
     if (state.filterGroup !== '__search_all') {
        if (!COUNTRY_FLAGS[c.group] && !INDO_GROUPS.includes(c.group) && !CATEGORY_ICONS[c.group]) return false;
     }
@@ -216,6 +209,7 @@ function renderCountryGrid() {
   const countries = [];
   const others = [];
 
+  // Filter and group channels by ASEAN countries and valid categories only
   state.groups.forEach(g => {
     if (INDO_GROUPS.includes(g.name)) {
       let indo = countries.find(c => c.name === 'Indonesia');
@@ -243,7 +237,7 @@ function renderCountryGrid() {
         ${countries.map(g => `
           <button class="country-card" data-group="${g.name === 'Indonesia' ? 'indo_all' : esc(g.name)}">
             <div class="flag-wrap">
-              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name] || 'id'}.png" alt="${esc(g.name)}">
+              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name]}.png" alt="${esc(g.name)}">
             </div>
             <span>${esc(g.name)}</span>
             <small>${g.count} Channel</small>
@@ -261,7 +255,7 @@ function renderCountryGrid() {
           </button>` : ''}
         ${others.map(g => `
           <button class="country-card" data-group="${esc(g.name)}">
-            <div class="flag-wrap icon-wrap">${CATEGORY_ICONS[g.name] || '📺'}</div>
+            <div class="flag-wrap icon-wrap">${CATEGORY_ICONS[g.name]}</div>
             <span>${esc(g.name)}</span>
             <small>${g.count} Channel</small>
           </button>
@@ -310,8 +304,6 @@ function bindRowClicks() {
   wireImgFallback(document);
 }
 
-/* ---------- grid (render bertahap + remote nav) ---------- */
-let gridState = null;
 function paintGrid() {
   const list = visibleChannels();
   const title = state.filterGroup === 'all' ? 'Semua Channel' : state.filterGroup === '__fav' ? 'Favorit' : (state.filterGroup === 'indo_all' ? 'Indonesia' : state.filterGroup);
@@ -384,7 +376,6 @@ function colsCount(cards) {
   return Math.max(1, n);
 }
 
-/* ---------- guide / EPG ---------- */
 function renderGuide() {
   $('#app').innerHTML = `<div class="main guide-view">
     <h1 class="page-title">Panduan Acara (EPG)</h1>
@@ -413,7 +404,6 @@ function renderGuide() {
   epg.onReady(paint); paint();
 }
 
-/* ---------- EPG painting (kartu & player) ---------- */
 function refreshEpgOnScreen() {
   if (!epg.ready) return;
   $$('.now[data-epg]').forEach((el) => {
@@ -432,7 +422,6 @@ function refreshEpgOnScreen() {
   }
 }
 
-/* ---------- player ---------- */
 function renderPlayer(id) {
   const c = state.byId.get(id);
   if (!c) { location.hash = ''; return; }
@@ -520,7 +509,6 @@ function buildQuality() {
   $('#q-sel').addEventListener('change', (e) => player.setLevel(+e.target.value));
 }
 
-/* ---------- header / nav / theme / settings / PWA ---------- */
 function bindHeader() {
   $('#search').addEventListener('input', (e) => {
     clearTimeout(searchTimer); const v = e.target.value;
