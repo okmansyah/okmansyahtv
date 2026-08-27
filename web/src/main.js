@@ -38,85 +38,17 @@ const CATEGORY_ICONS = {
 // Grup yang akan digabung ke bendera Indonesia
 const INDO_GROUPS = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
 
-function renderCountryGrid() {
-  const favCount = state.favorites.length;
-  const countries = [];
-  const others = [];
-
-  state.groups.forEach(g => {
-    // 1. Cek apakah ini grup Indonesia
-    if (INDO_GROUPS.includes(g.name)) {
-      let indo = countries.find(c => c.name === 'Indonesia');
-      if (!indo) {
-        indo = { name: 'Indonesia', count: 0 };
-        countries.push(indo);
-      }
-      indo.count += g.count;
-    }
-    // 2. Cek apakah ini negara ASEAN lainnya
-    else if (COUNTRY_FLAGS[g.name]) {
-      countries.push(g);
-    }
-    // 3. Cek apakah ini kategori konten (bukan nama negara asing)
-    else if (CATEGORY_ICONS[g.name]) {
-      others.push(g);
-    }
-    // Selain itu (US, Korea, Brazil, dll) DIABAIKAN/DIHAPUS dari tampilan
-  });
-
-  // Urutkan abjad, tapi Indonesia tetap pertama
-  countries.sort((a, b) => a.name === 'Indonesia' ? -1 : (b.name === 'Indonesia' ? 1 : a.name.localeCompare(b.name)));
-
-  $('#app').innerHTML = `
-    <div class="main">
-      <h2 class="page-title">Pilih Negara ASEAN</h2>
-      <p class="page-sub">Klik bendera untuk menonton siaran TV lokal negara Asia Tenggara</p>
-      <div class="country-grid">
-        ${countries.map(g => `
-          <button class="country-card" data-group="${g.name === 'Indonesia' ? 'indo_all' : esc(g.name)}">
-            <div class="flag-wrap">
-              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name]}.png" alt="${esc(g.name)}">
-            </div>
-            <span>${esc(g.name)}</span>
-            <small>${g.count} Channel</small>
-          </button>
-        `).join('')}
-      </div>
-
-      ${others.length || favCount ? `<h2 class="page-title" style="margin-top:40px">Kategori Konten</h2>` : ''}
-      <div class="country-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))">
-        ${favCount ? `
-          <button class="country-card" data-group="__fav">
-            <div class="flag-wrap icon-wrap">★</div>
-            <span>Favorit</span>
-            <small>${favCount} Channel</small>
-          </button>` : ''}
-        ${others.map(g => `
-          <button class="country-card" data-group="${esc(g.name)}">
-            <div class="flag-wrap icon-wrap">${CATEGORY_ICONS[g.name]}</div>
-            <span>${esc(g.name)}</span>
-            <small>${g.count} Channel</small>
-          </button>
-        `).join('')}
-      </div>
-    </div>`;
-
-  $$('.country-card').forEach(b => {
-    b.addEventListener('click', () => {
-      state.filterGroup = b.dataset.group;
-      renderHome();
-    });
-  });
-}
+const state = {
   mode: 'ott',
   channels: [],
   byId: new Map(),
   groups: [],
   filterGroup: 'all',
   query: '',
-  favorites: ls('okman_favs', []),
-  history: ls('okman_history', []),
+  favorites: [],
+  history: [],
 };
+
 const epg = new EpgStore();
 let player = null;
 let searchTimer = null;
@@ -169,6 +101,8 @@ function indexChannels() {
 
 /* ---------- boot ---------- */
 async function boot() {
+  state.favorites = ls('okman_favs', []);
+  state.history = ls('okman_history', []);
   initTheme(); bindHeader(); bindSettings(); registerSW(); bindInstall();
   $('#app').innerHTML = loader('Memuat daftar channel…');
   try {
@@ -195,7 +129,6 @@ function route() {
   else if (h === 'guide') renderGuide();
   else if (h === 'favorit') { state.filterGroup = '__fav'; renderHome(); }
   else {
-    // Reset to country grid when going home
     if (!h || h === '/') state.filterGroup = 'all';
     renderHome();
   }
@@ -210,14 +143,13 @@ function setActiveNav(h) {
 /* ---------- filtering ---------- */
 function visibleChannels() {
   const q = state.query.trim().toLowerCase();
-
   return state.channels.filter((c) => {
     if (state.filterGroup === '__fav') { if (!isFav(c.id)) return false; }
     else if (state.filterGroup === '__search_all') { /* all ok */ }
     else if (state.filterGroup === 'indo_all') { if (!INDO_GROUPS.includes(c.group)) return false; }
     else if (state.filterGroup !== 'all' && c.group !== state.filterGroup) return false;
 
-    // Keamanan tambahan: jangan tampilkan channel non-SEA kecuali sedang search
+    // Strict ASEAN filter unless searching
     if (state.filterGroup !== '__search_all') {
        if (!COUNTRY_FLAGS[c.group] && !INDO_GROUPS.includes(c.group) && !CATEGORY_ICONS[c.group]) return false;
     }
@@ -260,37 +192,32 @@ function renderHome() {
 
 function renderCountryGrid() {
   const favCount = state.favorites.length;
-
   const countries = [];
   const others = [];
 
-  // Mapping grup Indonesia yang lebih luas
-  const indoGroups = ['Indonesia Channels', 'Nasional', 'TVRI', 'Local Channels', 'Regional'];
-
   state.groups.forEach(g => {
-    if (COUNTRY_FLAGS[g.name] || indoGroups.includes(g.name)) {
-      if (indoGroups.includes(g.name)) {
-        let indo = countries.find(c => c.name === 'Indonesia');
-        if (!indo) {
-          indo = { name: 'Indonesia', count: 0 };
-          countries.push(indo);
-        }
-        indo.count += g.count;
-      } else {
-        countries.push(g);
+    if (INDO_GROUPS.includes(g.name)) {
+      let indo = countries.find(c => c.name === 'Indonesia');
+      if (!indo) {
+        indo = { name: 'Indonesia', count: 0 };
+        countries.push(indo);
       }
-    } else {
+      indo.count += g.count;
+    }
+    else if (COUNTRY_FLAGS[g.name]) {
+      countries.push(g);
+    }
+    else if (CATEGORY_ICONS[g.name]) {
       others.push(g);
     }
   });
 
-  // Urutkan agar Indonesia selalu pertama
-  countries.sort((a, b) => a.name === 'Indonesia' ? -1 : 1);
+  countries.sort((a, b) => a.name === 'Indonesia' ? -1 : (b.name === 'Indonesia' ? 1 : a.name.localeCompare(b.name)));
 
   $('#app').innerHTML = `
     <div class="main">
-      <h2 class="page-title">Pilih Negara</h2>
-      <p class="page-sub">Klik bendera untuk menonton siaran TV</p>
+      <h2 class="page-title">Pilih Negara ASEAN</h2>
+      <p class="page-sub">Klik bendera untuk menonton siaran TV lokal negara Asia Tenggara</p>
       <div class="country-grid">
         ${countries.map(g => `
           <button class="country-card" data-group="${g.name === 'Indonesia' ? 'indo_all' : esc(g.name)}">
@@ -303,7 +230,7 @@ function renderCountryGrid() {
         `).join('')}
       </div>
 
-      <h2 class="page-title" style="margin-top:40px">Kategori Konten</h2>
+      ${others.length || favCount ? `<h2 class="page-title" style="margin-top:40px">Kategori Konten</h2>` : ''}
       <div class="country-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))">
         ${favCount ? `
           <button class="country-card" data-group="__fav">
@@ -366,7 +293,7 @@ function bindRowClicks() {
 let gridState = null;
 function paintGrid() {
   const list = visibleChannels();
-  const title = state.filterGroup === 'all' ? 'Semua Channel' : state.filterGroup === '__fav' ? 'Favorit' : state.filterGroup;
+  const title = state.filterGroup === 'all' ? 'Semua Channel' : state.filterGroup === '__fav' ? 'Favorit' : (state.filterGroup === 'indo_all' ? 'Indonesia' : state.filterGroup);
   $('#ph-title').textContent = state.query ? `Hasil "${state.query}"` : title;
   $('#ph-sub').textContent = `${list.length} channel · mode ${SOURCES[state.mode].label}`;
   const grid = $('#grid'), slot = $('#empty-slot');
@@ -413,7 +340,6 @@ function cardHTML(c) {
       <div class="progress" data-prog="${esc(c.tvgId)}" style="display:none"><i style="width:0"></i></div></div>
   </div>`;
 }
-// navigasi panah untuk remote/Smart TV
 function setupRemoteNav(grid) {
   if (grid._nav) return; grid._nav = true;
   grid.addEventListener('keydown', (e) => {
@@ -551,7 +477,6 @@ function bindPlayerControls(video) {
   mute.addEventListener('click', () => { video.muted = !video.muted; mute.textContent = video.muted ? '🔇' : '🔊'; });
   vol.addEventListener('input', () => { video.volume = +vol.value; video.muted = +vol.value === 0; mute.textContent = video.muted ? '🔇' : '🔊'; });
   full.addEventListener('click', () => { if (!document.fullscreenElement) shell.requestFullscreen?.(); else document.exitFullscreen?.(); });
-  // tap video → toggle play + tampilkan bar (penting untuk layar sentuh)
   let hideT = null;
   const showBar = () => { shell.classList.add('show'); clearTimeout(hideT); hideT = setTimeout(() => shell.classList.remove('show'), 3000); };
   video.addEventListener('click', () => { video.paused ? video.play() : video.pause(); showBar(); });
@@ -580,17 +505,15 @@ function bindHeader() {
     clearTimeout(searchTimer); const v = e.target.value;
     searchTimer = setTimeout(() => {
       state.query = v;
-      // If searching, force home view to show channel grid
       if (v.trim()) {
         if (state.filterGroup === 'all') state.filterGroup = '__search_all';
       } else {
         if (state.filterGroup === '__search_all') state.filterGroup = 'all';
       }
-
       const h = location.hash.replace(/^#\/?/, '');
       if (h === 'guide') renderGuide();
       else if (h.startsWith('channel/')) location.hash = '';
-      else renderHome(); // Re-render home to switch from country grid to channel list
+      else renderHome();
     }, 220);
   });
   $('#theme').addEventListener('click', toggleTheme);
