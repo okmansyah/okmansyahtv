@@ -1,17 +1,44 @@
-// main.js — dhanytv Web (aplikasi nonton TV profesional).
+// main.js — okmansyahtv Web (aplikasi nonton TV profesional).
 import { parseM3U, groupSummary } from './lib/m3u.js';
 import { EpgStore, fmtTime } from './lib/epg.js';
 import { Player } from './lib/player.js';
 import { getProxyBase, setProxyBase } from './lib/proxy.js';
 
-const REPO = 'https://raw.githubusercontent.com/dhasap/dhanytv/main';
+const REPO = 'https://raw.githubusercontent.com/dhasap/okmansyahtv/main';
 const SOURCES = {
-  ott:  { url: `${REPO}/dhanytv-ott.m3u`, label: 'OTT (kompatibel)' },
-  full: { url: `${REPO}/dhanytv.m3u`,     label: 'Lengkap (DRM)' },
+  ott:  { url: `${REPO}/okmansyahtv-ott.m3u`, label: 'OTT (kompatibel)' },
+  full: { url: `${REPO}/okmansyahtv.m3u`,     label: 'Lengkap (DRM)' },
 };
 const EPG_URL = `${REPO}/epg.xml`;
 const CACHE_TTL = 60 * 60 * 1000;
 const PAGE = 120; // render bertahap
+
+const COUNTRY_FLAGS = {
+  'Indonesia': 'id',
+  'Malaysia': 'my',
+  'Singapore': 'sg',
+  'Thailand': 'th',
+  'Vietnam': 'vn',
+  'Philippines': 'ph',
+  'Brunei': 'bn',
+  'Cambodia': 'kh',
+  'Laos': 'la',
+  'Myanmar': 'mm',
+  'East Timor': 'tl'
+};
+
+const CATEGORY_ICONS = {
+  'Sports': '⚽',
+  'Kids': '👶',
+  'Movies': '🎬',
+  'News': '📰',
+  'Entertainment': '🎭',
+  'Documentary': '📚',
+  'Music': '🎵',
+  'Lokal': '🏠',
+  'Regional': '📍',
+  'Nasional': '📺'
+};
 
 const state = {
   mode: 'ott',
@@ -20,8 +47,8 @@ const state = {
   groups: [],
   filterGroup: 'all',
   query: '',
-  favorites: ls('dhany_favs', []),
-  history: ls('dhany_history', []),
+  favorites: ls('okman_favs', []),
+  history: ls('okman_history', []),
 };
 const epg = new EpgStore();
 let player = null;
@@ -38,11 +65,11 @@ const isFav = (id) => state.favorites.includes(id);
 function toggleFav(id) {
   const i = state.favorites.indexOf(id);
   if (i === -1) state.favorites.unshift(id); else state.favorites.splice(i, 1);
-  save('dhany_favs', state.favorites);
+  save('okman_favs', state.favorites);
 }
 function recordHistory(id) {
   state.history = [id, ...state.history.filter((x) => x !== id)].slice(0, 24);
-  save('dhany_history', state.history);
+  save('okman_history', state.history);
 }
 function wireImgFallback(root) {
   $$('img[data-ini]', root || document).forEach((img) => {
@@ -56,7 +83,7 @@ function wireImgFallback(root) {
 
 /* ---------- playlist ---------- */
 async function fetchPlaylist(mode) {
-  const key = `dhany_pl_${mode}`;
+  const key = `okman_pl_${mode}`;
   try { const c = JSON.parse(localStorage.getItem(key) || 'null'); if (c && Date.now() - c.t < CACHE_TTL && c.text) return c.text; } catch {}
   const res = await fetch(SOURCES[mode].url, { cache: 'no-store' });
   if (!res.ok) throw new Error('Gagal memuat playlist (HTTP ' + res.status + ')');
@@ -96,7 +123,11 @@ function route() {
   if (h.startsWith('channel/')) renderPlayer(decodeURIComponent(h.slice(8)));
   else if (h === 'guide') renderGuide();
   else if (h === 'favorit') { state.filterGroup = '__fav'; renderHome(); }
-  else renderHome();
+  else {
+    // Reset to country grid when going home
+    if (!h || h === '/') state.filterGroup = 'all';
+    renderHome();
+  }
   setActiveNav(h);
   window.scrollTo(0, 0);
 }
@@ -110,6 +141,7 @@ function visibleChannels() {
   const q = state.query.trim().toLowerCase();
   return state.channels.filter((c) => {
     if (state.filterGroup === '__fav') { if (!isFav(c.id)) return false; }
+    else if (state.filterGroup === '__search_all') { /* all ok */ }
     else if (state.filterGroup !== 'all' && c.group !== state.filterGroup) return false;
     if (q && !`${c.name} ${c.group}`.toLowerCase().includes(q)) return false;
     return true;
@@ -118,38 +150,87 @@ function visibleChannels() {
 
 /* ---------- home ---------- */
 function renderHome() {
+  if (state.filterGroup === 'all' && !state.query) {
+    renderCountryGrid();
+    return;
+  }
+
   const favCount = state.favorites.length;
-  const showRows = state.filterGroup === 'all' && !state.query;
   const histChannels = state.history.map((id) => state.byId.get(id)).filter(Boolean).slice(0, 12);
 
   $('#app').innerHTML = `
-    <div class="layout">
-      <aside class="sidebar">
-        <h3>Kategori</h3>
-        <button class="cat-btn ${state.filterGroup === 'all' ? 'active' : ''}" data-group="all"><span>Semua channel</span><span class="count">${state.channels.length}</span></button>
-        ${favCount ? `<button class="cat-btn ${state.filterGroup === '__fav' ? 'active' : ''}" data-group="__fav"><span>★ Favorit</span><span class="count">${favCount}</span></button>` : ''}
-        ${state.groups.map((g) => `<button class="cat-btn ${state.filterGroup === g.name ? 'active' : ''}" data-group="${esc(g.name)}"><span>${esc(g.name)}</span><span class="count">${g.count}</span></button>`).join('')}
-      </aside>
-      <main class="main">
-        <div class="chips mobile-only">
-          <button class="chip ${state.filterGroup === 'all' ? 'active' : ''}" data-group="all">Semua</button>
-          ${favCount ? `<button class="chip ${state.filterGroup === '__fav' ? 'active' : ''}" data-group="__fav">★ Favorit</button>` : ''}
-          ${state.groups.slice(0, 24).map((g) => `<button class="chip ${state.filterGroup === g.name ? 'active' : ''}" data-group="${esc(g.name)}">${esc(g.name)}</button>`).join('')}
-        </div>
-        ${showRows && histChannels.length ? rowHTML('Lanjut nonton', histChannels) : ''}
-        ${showRows ? `<div id="live-row-slot"></div>` : ''}
-        <h2 class="page-title" id="ph-title"></h2>
-        <p class="page-sub" id="ph-sub"></p>
-        <div class="grid" id="grid"></div>
-        <div id="grid-sentinel"></div>
-        <div id="empty-slot"></div>
-      </main>
+    <div class="main">
+      <button class="back-btn" id="home-back" style="margin-top:0">← Kembali ke Negara</button>
+      ${state.filterGroup === 'all' && histChannels.length ? rowHTML('Lanjut nonton', histChannels) : ''}
+      <h2 class="page-title" id="ph-title"></h2>
+      <p class="page-sub" id="ph-sub"></p>
+      <div class="grid" id="grid"></div>
+      <div id="grid-sentinel"></div>
+      <div id="empty-slot"></div>
     </div>`;
 
-  $$('[data-group]').forEach((b) => b.addEventListener('click', () => { state.filterGroup = b.dataset.group; location.hash = ''; renderHome(); }));
-  if (showRows) renderLiveRow();
+  $('#home-back').addEventListener('click', () => {
+    state.filterGroup = 'all';
+    state.query = '';
+    $('#search').value = '';
+    renderHome();
+  });
   bindRowClicks();
   paintGrid();
+}
+
+function renderCountryGrid() {
+  const favCount = state.favorites.length;
+
+  // Categorize groups into Countries and Others
+  const countries = [];
+  const others = [];
+
+  state.groups.forEach(g => {
+    if (COUNTRY_FLAGS[g.name]) countries.push(g);
+    else others.push(g);
+  });
+
+  $('#app').innerHTML = `
+    <div class="main">
+      <h2 class="page-title">Pilih Negara</h2>
+      <p class="page-sub">Pilih negara untuk melihat daftar channel TV</p>
+      <div class="country-grid">
+        ${countries.map(g => `
+          <button class="country-card" data-group="${esc(g.name)}">
+            <div class="flag-wrap">
+              <img src="https://flagcdn.com/w320/${COUNTRY_FLAGS[g.name]}.png" alt="${esc(g.name)}">
+            </div>
+            <span>${esc(g.name)}</span>
+            <small>${g.count} Channel</small>
+          </button>
+        `).join('')}
+      </div>
+
+      <h2 class="page-title" style="margin-top:40px">Kategori Lain</h2>
+      <div class="country-grid" style="grid-template-columns: repeat(auto-fill, minmax(120px, 1fr))">
+        ${favCount ? `
+          <button class="country-card" data-group="__fav">
+            <div class="flag-wrap icon-wrap">★</div>
+            <span>Favorit</span>
+            <small>${favCount} Channel</small>
+          </button>` : ''}
+        ${others.map(g => `
+          <button class="country-card" data-group="${esc(g.name)}">
+            <div class="flag-wrap icon-wrap">${CATEGORY_ICONS[g.name] || '📺'}</div>
+            <span>${esc(g.name)}</span>
+            <small>${g.count} Channel</small>
+          </button>
+        `).join('')}
+      </div>
+    </div>`;
+
+  $$('.country-card').forEach(b => {
+    b.addEventListener('click', () => {
+      state.filterGroup = b.dataset.group;
+      renderHome();
+    });
+  });
 }
 
 function rowHTML(title, list) {
@@ -403,10 +484,17 @@ function bindHeader() {
     clearTimeout(searchTimer); const v = e.target.value;
     searchTimer = setTimeout(() => {
       state.query = v;
+      // If searching, force home view to show channel grid
+      if (v.trim()) {
+        if (state.filterGroup === 'all') state.filterGroup = '__search_all';
+      } else {
+        if (state.filterGroup === '__search_all') state.filterGroup = 'all';
+      }
+
       const h = location.hash.replace(/^#\/?/, '');
       if (h === 'guide') renderGuide();
       else if (h.startsWith('channel/')) location.hash = '';
-      else paintGrid();
+      else renderHome(); // Re-render home to switch from country grid to channel list
     }, 220);
   });
   $('#theme').addEventListener('click', toggleTheme);
@@ -429,7 +517,7 @@ function bindSettings() {
   $('#proxy-clear').addEventListener('click', () => { $('#proxy-url').value = ''; setProxyBase(''); });
 }
 function initTheme() {
-  const saved = localStorage.getItem('dhany_theme');
+  const saved = localStorage.getItem('okman_theme');
   const dark = saved ? saved === 'dark' : (saved === null ? true : matchMedia('(prefers-color-scheme: dark)').matches);
   document.documentElement.classList.toggle('light', !dark);
 }
@@ -437,7 +525,7 @@ function toggleTheme() {
   const light = document.documentElement.classList.contains('light');
   const dark = !light;
   document.documentElement.classList.toggle('light', !dark);
-  localStorage.setItem('dhany_theme', dark ? 'dark' : 'light');
+  localStorage.setItem('okman_theme', dark ? 'dark' : 'light');
 }
 function registerSW() {
   if ('serviceWorker' in navigator) {

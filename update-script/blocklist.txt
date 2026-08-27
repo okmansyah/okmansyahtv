@@ -1,5 +1,5 @@
 # ============================================================
-# dhanytv - Blocklist URL Stream Mati
+# okmansyahtv - Blocklist URL Stream Mati
 # ============================================================
 # Daftar URL stream yang sudah dikonfirmasi MATI (HTTP 404/400/410/500/521)
 # dan akan otomatis dibuang oleh update-script/cleanup_playlist.py pada

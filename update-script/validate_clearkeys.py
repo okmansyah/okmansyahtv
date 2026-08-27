@@ -3,7 +3,7 @@
 tidak cocok dengan license_key di playlist (penyebab error '403 kunci salah').
 
 Pemakaian:
-  python3 validate_clearkeys.py dhanytv.m3u [--write]
+  python3 validate_clearkeys.py okmansyahtv.m3u [--write]
 
 - Manifest tak terbaca / geo / timeout -> entri DIPERTAHANKAN (tidak bisa divalidasi).
 - KID terbaca & match   -> entri DIPERTAHANKAN.
@@ -12,7 +12,7 @@ Pemakaian:
 import concurrent.futures as cf
 import re, sys, ssl, urllib.request, ssl as _ssl
 
-M3U = sys.argv[1] if len(sys.argv) > 1 else 'dhanytv.m3u'
+M3U = sys.argv[1] if len(sys.argv) > 1 else 'okmansyahtv.m3u'
 WRITE = '--write' in sys.argv
 UA = 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0 Safari/537.36'
 CTX = ssl.create_default_context(); CTX.check_hostname=False; CTX.verify_mode=ssl.CERT_NONE

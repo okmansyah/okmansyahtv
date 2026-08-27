@@ -1,11 +1,11 @@
-/* sw.js — service worker dhanytv Web (PWA: offline shell + cache).
+/* sw.js — service worker okmansyahtv Web (PWA: offline shell + cache).
    Strategi:
    - App shell (HTML/CSS/JS/ikon) → cache-first, di-precache saat install.
    - Library CDN (hls.js/Shaka) → stale-while-revalidate.
    - Playlist/EPG (raw.githubusercontent) → network-first (data harus fresh), fallback cache.
    - Stream (.ts/.m4s/.m3u8/.mpd) & proxy → JANGAN di-cache (live, besar).
 */
-const VERSION = 'dhany-v1';
+const VERSION = 'okman-v1';
 const SHELL = `${VERSION}-shell`;
 const RUNTIME = `${VERSION}-rt`;
 

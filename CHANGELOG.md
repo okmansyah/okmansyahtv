@@ -54,4 +54,4 @@ diperbarui otomatis.
 ---
 
 > Untuk riwayat commit lengkap, lihat
-> [commits](https://github.com/dhasap/dhanytv/commits/main).
+> [commits](https://github.com/dhasap/okmansyahtv/commits/main).

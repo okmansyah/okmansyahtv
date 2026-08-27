@@ -1,5 +1,5 @@
 /**
- * dhanytv stream-proxy — Cloudflare Worker (Fase 2, hardened)
+ * okmansyahtv stream-proxy — Cloudflare Worker (Fase 2, hardened)
  * ----------------------------------------------------------
  * Fungsi: inject header Referer/User-Agent/Origin (#EXTVLCOPT), tambah CORS,
  * proxy manifest (HLS .m3u8 / DASH .mpd) + segmen + lisensi DRM, dan rewrite
@@ -15,7 +15,7 @@
  *   5. Tidak meneruskan cookie / header sensitif; respons diberi header anti-sniff.
  *
  * Konfigurasi (wrangler.toml [vars]):
- *   ALLOWED_ORIGINS = "https://dhanytv.pages.dev"
+ *   ALLOWED_ORIGINS = "https://okmansyahtv.pages.dev"
  *   (kosongkan untuk izinkan semua — TIDAK disarankan di produksi)
  *
  * Deploy:  cd web/proxy && npm i -g wrangler && wrangler deploy
@@ -77,7 +77,7 @@ export default {
     }
     const range = request.headers.get('Range');
     if (range) fwd.set('Range', range);
-    if (!fwd.has('User-Agent')) fwd.set('User-Agent', 'Mozilla/5.0 (SmartTV) dhanytv-proxy');
+    if (!fwd.has('User-Agent')) fwd.set('User-Agent', 'Mozilla/5.0 (SmartTV) okmansyahtv-proxy');
 
     let upstream;
     try {

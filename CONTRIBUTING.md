@@ -1,10 +1,10 @@
-# 🤝 Kontribusi ke dhanytv
+# 🤝 Kontribusi ke okmansyahtv
 
 Terima kasih sudah mau ikut menjaga playlist ini tetap hidup! Berikut cara berkontribusi.
 
 ## ➕ Menambah channel baru
 
-Karena auto-update harian **menimpa `dhanytv.m3u` dengan source terbaru**, channel yang ditambahkan langsung ke `dhanytv.m3u` akan **hilang tiap hari**. Tambahkan channel manual di satu tempat yang aman:
+Karena auto-update harian **menimpa `okmansyahtv.m3u` dengan source terbaru**, channel yang ditambahkan langsung ke `okmansyahtv.m3u` akan **hilang tiap hari**. Tambahkan channel manual di satu tempat yang aman:
 
 **`update-script/extra_channels.m3u`**
 
@@ -58,13 +58,13 @@ mati yang terus muncul dari source.
 
 ```bash
 # Validasi & rapikan playlist (harus exit 0)
-python3 update-script/cleanup_playlist.py dhanytv.m3u --write --ott-output dhanytv-ott.m3u --check
+python3 update-script/cleanup_playlist.py okmansyahtv.m3u --write --ott-output okmansyahtv-ott.m3u --check
 
 # Pastikan channel kurasi ter-inject
 python3 update-script/merge_extra.py
 
 # Generate EPG (opsional, butuh source EPG)
-python3 update-script/generate_epg.py --m3u dhanytv.m3u --output epg.xml
+python3 update-script/generate_epg.py --m3u okmansyahtv.m3u --output epg.xml
 ```
 
 ## 📋 Aturan ringkas

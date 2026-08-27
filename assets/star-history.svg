@@ -17,6 +17,6 @@
   <path d="M60,170 L180,165 L300,155 L420,140 L540,115 L660,70 L700,45 L700,170 Z" fill="url(#g)"/>
   <polyline points="60,170 180,165 300,155 420,140 540,115 660,70 700,45" fill="none" stroke="#58a6ff" stroke-width="2.5" stroke-linejoin="round"/>
   <circle cx="700" cy="45" r="4" fill="#58a6ff"/>
-  <text x="380" y="18" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="600" font-family="system-ui">Star History - dhasap/dhanytv</text>
+  <text x="380" y="18" fill="#e6edf3" font-size="13" text-anchor="middle" font-weight="600" font-family="system-ui">Star History - dhasap/okmansyahtv</text>
   <text x="700" y="38" fill="#58a6ff" font-size="12" text-anchor="end" font-weight="bold" font-family="system-ui">25 stars</text>
 </svg>

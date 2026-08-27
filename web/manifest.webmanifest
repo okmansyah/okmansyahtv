@@ -1,7 +1,7 @@
 {
-  "name": "dhanytv — Nonton TV Live",
-  "short_name": "dhanytv",
-  "description": "Nonton 1100+ channel TV live Indonesia & internasional di browser. Playlist dhanytv + EPG.",
+  "name": "okmansyahtv — Nonton TV Live",
+  "short_name": "okmansyahtv",
+  "description": "Nonton channel TV live Indonesia & Asia Tenggara di browser. Playlist okmansyahtv + EPG.",
   "lang": "id",
   "dir": "ltr",
   "start_url": "./",

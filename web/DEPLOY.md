@@ -1,4 +1,4 @@
-# 🚀 Deploy dhanytv Web — Full Cloudflare
+# 🚀 Deploy okmansyahtv Web — Full Cloudflare
 
 Dua bagian: **frontend** (Cloudflare Pages) + **stream-proxy** (Cloudflare Workers).
 Keduanya gratis.
@@ -9,7 +9,7 @@ Keduanya gratis.
 
 **Lewat dashboard (paling gampang):**
 1. Cloudflare Dashboard → **Workers & Pages → Create → Pages → Connect to Git**.
-2. Pilih repo `dhasap/dhanytv`.
+2. Pilih repo `dhasap/okmansyahtv`.
 3. Build settings:
    - **Framework preset:** `None`
    - **Build command:** *(kosongkan)*
@@ -32,7 +32,7 @@ npx wrangler login       # login ke akun Cloudflare
 npx wrangler deploy
 ```
 
-Hasil: `https://dhanytv-proxy.<akun>.workers.dev`.
+Hasil: `https://okmansyahtv-proxy.<akun>.workers.dev`.
 
 Lalu buka situs → **⚙ Pengaturan** → tempel URL Worker → **Simpan**.
 Channel berheader/DRM otomatis lewat proxy; channel HLS biasa tetap langsung.

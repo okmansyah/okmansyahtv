@@ -1,14 +1,14 @@
 #!/bin/bash
 # ============================================================
-# dhanytv - Manual Update Script
+# okmansyahtv - Manual Update Script
 # Playlist IPTV + International Merge + Custom EPG Generator
 # ============================================================
 
 set -e
 
 TOKEN=""
-REPO="dhasap/dhanytv"
-TARGET_FILE="dhanytv.m3u"
+REPO="dhasap/okmansyahtv"
+TARGET_FILE="okmansyahtv.m3u"
 EPG_OUTPUT="epg.xml"
 
 # Colors
@@ -21,7 +21,7 @@ NC='\033[0m'
 print_banner() {
     echo -e "${CYAN}"
     echo "╔══════════════════════════════════════╗"
-    echo "║   dhanytv Manual Update Script       ║"
+    echo "║   okmansyahtv Manual Update Script   ║"
     echo "║   Playlist + Intl + EPG Generator    ║"
     echo "╚══════════════════════════════════════╝"
     echo -e "${NC}"
@@ -138,14 +138,14 @@ fi
 # Step 5: Normalize playlist and generate OTT-friendly variant
 echo -e "${YELLOW}[6/8] Cleaning playlist syntax & generating OTT variant...${NC}"
 if [ -f "update-script/cleanup_playlist.py" ]; then
-    python3 update-script/cleanup_playlist.py "$TARGET_FILE" --write --ott-output dhanytv-ott.m3u --check "${SANITIZE_ARG[@]}"
+    python3 update-script/cleanup_playlist.py "$TARGET_FILE" --write --ott-output okmansyahtv-ott.m3u --check "${SANITIZE_ARG[@]}"
 else
     echo -e "${RED}ERROR: update-script/cleanup_playlist.py tidak ditemukan!${NC}"
     exit 1
 fi
 
 AFTER=$(grep -c '#EXTINF' "$TARGET_FILE" || echo "0")
-OTT_COUNT=$(grep -c '#EXTINF' dhanytv-ott.m3u 2>/dev/null || echo "0")
+OTT_COUNT=$(grep -c '#EXTINF' okmansyahtv-ott.m3u 2>/dev/null || echo "0")
 echo -e "  ${GREEN}Channel: $BEFORE → $AFTER | OTT: $OTT_COUNT${NC}"
 
 # Step 6: Generate Custom EPG (multi-source)
@@ -193,11 +193,11 @@ else
         echo -e "${RED}ERROR: Token diperlukan untuk push!${NC}"
         echo "Gunakan: $0 -t ghp_xxxxx"
     else
-        git config user.name "dhanytv-updater"
-        git config user.email "dhanytv-updater@users.noreply.github.com"
-        git add "$TARGET_FILE" "dhanytv-ott.m3u" "$EPG_OUTPUT" "update-script/"
+        git config user.name "okmansyahtv-updater"
+        git config user.email "okmansyahtv-updater@users.noreply.github.com"
+        git add "$TARGET_FILE" "okmansyahtv-ott.m3u" "$EPG_OUTPUT" "update-script/"
         CHANNEL_COUNT=$(grep -c '#EXTINF' "$TARGET_FILE" || echo "0")
-        OTT_CHANNEL_COUNT=$(grep -c '#EXTINF' dhanytv-ott.m3u 2>/dev/null || echo "0")
+        OTT_CHANNEL_COUNT=$(grep -c '#EXTINF' okmansyahtv-ott.m3u 2>/dev/null || echo "0")
         EPG_CHANNELS=$(grep -c '<channel ' "$EPG_OUTPUT" 2>/dev/null || echo "0")
         COMMIT_DATE=$(date -u '+%Y-%m-%d %H:%M UTC')
         git commit -m "manual-update: Playlist + OTT + EPG ($CHANNEL_COUNT ch, $OTT_CHANNEL_COUNT OTT, $EPG_CHANNELS EPG) - $COMMIT_DATE"
@@ -210,8 +210,8 @@ echo ""
 echo -e "${GREEN}============================================"
 echo "  Update Selesai!"
 echo "============================================"
-echo -e "  Channel  : $(grep -c '#EXTINF' dhanytv.m3u 2>/dev/null || echo 'N/A')"
-echo -e "  OTT Ch   : $(grep -c '#EXTINF' dhanytv-ott.m3u 2>/dev/null || echo 'N/A')"
+echo -e "  Channel  : $(grep -c '#EXTINF' okmansyahtv.m3u 2>/dev/null || echo 'N/A')"
+echo -e "  OTT Ch   : $(grep -c '#EXTINF' okmansyahtv-ott.m3u 2>/dev/null || echo 'N/A')"
 echo -e "  EPG Ch   : $(grep -c '<channel ' epg.xml 2>/dev/null || echo 'N/A')"
 echo -e "  EPG Size : $(du -h epg.xml 2>/dev/null | cut -f1 || echo 'N/A')"
 echo -e "============================================${NC}"

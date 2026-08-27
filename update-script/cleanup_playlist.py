@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Clean and validate dhanytv M3U playlists.
+"""Clean and validate okmansyahtv M3U playlists.
 
 The script is intentionally conservative: it does not invent stream URLs. It only
 normalizes playlist syntax, removes entries without playable URLs, and generates
@@ -29,7 +29,7 @@ PROP_PREFIXES = (
     "#EXT-X-",
 )
 
-DEFAULT_HEADER = '#EXTM3U url-tvg="https://raw.githubusercontent.com/dhasap/dhanytv/main/epg.xml"'
+DEFAULT_HEADER = '#EXTM3U url-tvg="https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml"'
 DENS_REFERRER = "https://www.dens.tv/"
 DENS_ORIGIN = "https://www.dens.tv"
 DENS_REFERRER_PROP = f"#EXTVLCOPT:http-referrer={DENS_REFERRER}"
@@ -1083,7 +1083,7 @@ def validate_items(items: list[str | Entry]) -> dict[str, int]:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Clean and validate a dhanytv M3U playlist")
+    parser = argparse.ArgumentParser(description="Clean and validate a okmansyahtv M3U playlist")
     parser.add_argument("playlist", help="Path to the M3U playlist")
     parser.add_argument("--write", action="store_true", help="Overwrite playlist with cleaned output")
     parser.add_argument("--output", help="Write cleaned output to this path instead of stdout/overwrite")

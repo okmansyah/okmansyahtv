@@ -1,7 +1,7 @@
-# 📺 dhanytv Web — Nonton TV Live di Browser
+# 📺 okmansyahtv Web — Nonton TV Live di Browser
 
-Front-end pemutar (SPA statis) untuk playlist **dhanytv**. Membaca `dhanytv-ott.m3u`
-/ `dhanytv.m3u` + `epg.xml` langsung dari repo (`raw.githubusercontent.com`) lalu
+Front-end pemutar (SPA statis) untuk playlist **okmansyahtv**. Membaca `okmansyahtv-ott.m3u`
+/ `okmansyahtv.m3u` + `epg.xml` langsung dari repo (`raw.githubusercontent.com`) lalu
 memutar stream **HLS / DASH (DRM)** langsung di browser — tanpa install aplikasi IPTV.
 
 ## 🔐 Fase 2 — DRM + Stream Proxy
@@ -72,6 +72,7 @@ web/
     ├── worker.js         # Cloudflare Worker (inject header + CORS + rewrite manifest)
     ├── wrangler.toml     # config deploy + rate-limit binding
     └── package.json
+}
 ```
 
 ## 🌐 Deploy

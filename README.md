@@ -1,23 +1,19 @@
 <div align="center">
 
-# 📺 dhanytv — IPTV Indonesia Gratis · Playlist M3U & EPG XMLTV
+# 📺 okmansyahtv — IPTV Asia Tenggara Gratis · Playlist M3U & EPG XMLTV
 
-**Playlist IPTV Indonesia gratis** dengan **1100+ channel live TV** dari **27+ negara**, **EPG XMLTV** lengkap, dan **update otomatis tiap hari**. Siap pakai di **TiviMate, Kodi, VLC, OTT Navigator, Android TV & Smart TV**.
+**Playlist IPTV Asia Tenggara (ASEAN) gratis** dengan channel live TV dari Indonesia, Malaysia, Singapura, Thailand, Vietnam, Filipina, Brunei, dan lainnya. Dilengkapi **EPG XMLTV** lengkap dan **update otomatis tiap hari**. Siap pakai di **TiviMate, Kodi, VLC, OTT Navigator, Android TV & Smart TV**.
 
-[![Auto Update](https://img.shields.io/github/actions/workflow/status/dhasap/dhanytv/auto-update.yml?label=auto-update&logo=githubactions&logoColor=white)](https://github.com/dhasap/dhanytv/actions)
-[![Last Commit](https://img.shields.io/github/last-commit/dhasap/dhanytv?logo=git&logoColor=white)](https://github.com/dhasap/dhanytv/commits/main)
-[![Stars](https://img.shields.io/github/stars/dhasap/dhanytv?style=flat&logo=github)](https://github.com/dhasap/dhanytv/stargazers)
-[![Channels](https://img.shields.io/badge/channels-1100+-blue)](#-kategori-channel)
-[![OTT](https://img.shields.io/badge/OTT--friendly-740+-purple)](#-link-playlist)
-[![EPG](https://img.shields.io/badge/EPG-1040+-channels-green)](#-epg-electronic-program-guide)
-[![Format](https://img.shields.io/badge/format-M3U%20%7C%20M3U8%20%7C%20XMLTV-orange)](#-link-playlist)
+[![Auto Update](https://img.shields.io/github/actions/workflow/status/dhasap/okmansyahtv/auto-update.yml?label=auto-update&logo=githubactions&logoColor=white)](https://github.com/dhasap/okmansyahtv/actions)
+[![Last Commit](https://img.shields.io/github/last-commit/dhasap/okmansyahtv?logo=git&logoColor=white)](https://github.com/dhasap/okmansyahtv/commits/main)
+[![Stars](https://img.shields.io/github/stars/dhasap/okmansyahtv?style=flat&logo=github)](https://github.com/dhasap/okmansyahtv/stargazers)
 [![License](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 
-🇮🇩 🇰🇷 🇯🇵 🇹🇷 🇬🇧 🇺🇸 🇩🇪 🇫🇷 🇧🇷 🇮🇳 🇹🇭 🇲🇾 🇸🇬 🇨🇳 🇻🇳 🇵🇭 🇲🇽 🇷🇺 🇦🇪 🇪🇬 🇸🇦 🇳🇬 🇿🇦 🇵🇰 🇧🇩 🇮🇷
+🇮🇩 🇲🇾 🇸🇬 🇹🇭 🇻🇳 🇵🇭 🇧🇳 🇰🇭 🇱🇦 🇲🇲 🇹🇱
 
 </div>
 
-> **English:** Free Indonesia IPTV playlist — 1040+ M3U/M3U8 live TV channels from 27+ countries, XMLTV EPG guide, daily auto-update. Works with TiviMate, Kodi, VLC, OTT Navigator, Android TV & Smart TV.
+> **English:** Free Southeast Asia (ASEAN) IPTV playlist — M3U/M3U8 live TV channels from Indonesia, Malaysia, Singapore, Thailand, Vietnam, Philippines, Brunei, and more. XMLTV EPG guide, daily auto-update. Works with TiviMate, Kodi, VLC, OTT Navigator, Android TV & Smart TV.
 
 ---
 
@@ -59,19 +55,17 @@ Salin salah satu link di bawah ke IPTV player kamu:
 
 | Link | Keterangan |
 |------|------------|
-| `https://raw.githubusercontent.com/dhasap/dhanytv/main/dhanytv.m3u` | ⭐ Playlist utama (lengkap, termasuk DASH/DRM) |
-| `https://raw.githubusercontent.com/dhasap/dhanytv/main/dhanytv-ott.m3u` | 📺 Playlist OTT-friendly / Smart TV (non-DASH/DRM, HLS saja) |
-| `https://raw.githubusercontent.com/dhasap/dhanytv/main/epg.xml` | 🗓️ EPG XMLTV (jadwal acara) |
+| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv.m3u` | ⭐ Playlist utama (lengkap, termasuk DASH/DRM) |
+| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv-ott.m3u` | 📺 Playlist OTT-friendly / Smart TV (non-DASH/DRM, HLS saja) |
+| `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml` | 🗓️ EPG XMLTV (jadwal acara) |
 
-**Short link:** [`bit.ly/dhanytv`](https://bit.ly/dhanytv) · [`bit.ly/dhanytv-ott`](https://bit.ly/dhanytv-ott) · [`bit.ly/dhanytv-epg`](https://bit.ly/dhanytv-epg)
+**Short link:** [`bit.ly/okmansyahtv`](https://bit.ly/okmansyahtv) · [`bit.ly/okmansyahtv-ott`](https://bit.ly/okmansyahtv-ott) · [`bit.ly/okmansyahtv-epg`](https://bit.ly/okmansyahtv-epg)
 
 | Statistik | Jumlah |
 |-----------|--------|
-| Channel playlist utama | **1100+** |
-| Channel OTT-friendly | **740+** |
-| Channel dengan EPG | 1000+ (jadwal asli: ~120 channel ID/regional; lainnya placeholder) |
-| Programme entries | **25.000+** |
-| Negara | **27+** |
+| Channel playlist utama | **Varies** |
+| Programme entries | **20.000+** |
+| Kawasan | **Asia Tenggara (ASEAN)** |
 | Update | **Otomatis tiap hari** |
 
 ---
@@ -93,11 +87,11 @@ Salin salah satu link di bawah ke IPTV player kamu:
 
 1. Buka player → **Add Playlist** / **Tambah Playlist**
 2. Pilih **M3U URL**
-3. Paste: `https://raw.githubusercontent.com/dhasap/dhanytv/main/dhanytv.m3u`
+3. Paste: `https://raw.githubusercontent.com/dhasap/okmansyahtv/main/okmansyahtv.m3u`
 4. Simpan, tunggu loading selesai.
 
 EPG sudah tertanam di header playlist. Kalau jadwal tidak muncul, tambah URL EPG manual:
-`https://raw.githubusercontent.com/dhasap/dhanytv/main/epg.xml`
+`https://raw.githubusercontent.com/dhasap/okmansyahtv/main/epg.xml`
 
 ### 3. Channel "tidak didukung"?
 
@@ -120,9 +114,9 @@ Channel **(V+)** / **(DASH/MPD)** memakai format **DASH + DRM ClearKey**. Hanya 
 | **Regional** | Jawa Pos TV, JTV, Bali TV, Bandung TV, Jogja TV, Banjar TV, Sultra TV |
 | **Hiburan** | HITS, CelebritiesTV, Vision Prime, Food Travel, Hanacaraka TV |
 
-### 🌏 Internasional (27 negara)
+### 🌏 Asia Tenggara (ASEAN)
 
-🇺🇸 US · 🇬🇧 UK · 🇯🇵 Japan · 🇰🇷 Korea · 🇮🇳 India · 🇹🇷 Turkey · 🇹🇭 Thailand · 🇵🇭 Philippines · 🇻🇳 Vietnam · 🇲🇾 Malaysia · 🇸🇬 Singapore · 🇨🇳 China · 🇷🇺 Russia · 🇩🇪 Germany · 🇫🇷 France · 🇪🇸 Spain · 🇮🇹 Italy · 🇧🇷 Brazil · 🇲🇽 Mexico · 🇦🇷 Argentina · 🇨🇴 Colombia · 🇦🇪 UAE · 🇪🇬 Egypt · 🇸🇦 Saudi Arabia · 🇳🇬 Nigeria · 🇿🇦 South Africa · 🇵🇰 Pakistan
+🇮🇩 Indonesia · 🇲🇾 Malaysia · 🇸🇬 Singapura · 🇹🇭 Thailand · 🇻🇳 Vietnam · 🇵🇭 Filipina · 🇧🇳 Brunei · 🇰🇭 Kamboja · 🇱🇦 Laos · 🇲🇲 Myanmar · 🇹🇱 Timor Leste
 
 ### ⚽🎬📰 Kategori Lain
 
@@ -139,7 +133,7 @@ Channel **(V+)** / **(DASH/MPD)** memakai format **DASH + DRM ClearKey**. Hanya 
 
 ## 📡 EPG (Electronic Program Guide)
 
-Jadwal acara dalam format **XMLTV** supaya muncul di TiviMate, Kodi, OTT Navigator, dan player lain. **Semua 1040+ channel punya entri EPG** (audit otomatis memastikan tidak ada yang bolong) dengan **25.000+ programme**; channel yang belum cocok dengan sumber EPG diberi placeholder *"Jadwal belum tersedia"* agar tetap terbaca player.
+Jadwal acara dalam format **XMLTV** supaya muncul di TiviMate, Kodi, OTT Navigator, and player lain. **Semua 1040+ channel punya entri EPG** (audit otomatis memastikan tidak ada yang bolong) dengan **25.000+ programme**; channel yang belum cocok dengan sumber EPG diberi placeholder *"Jadwal belum tersedia"* agar tetap terbaca player.
 
 | Statistik | Nilai |
 |-----------|-------|
@@ -148,7 +142,7 @@ Jadwal acara dalam format **XMLTV** supaya muncul di TiviMate, Kodi, OTT Navigat
 | File size | ~9 MB |
 | Format | XMLTV (`epg.xml`) |
 
-**Sumber EPG:** epgshare01.online (Indonesia, Singapore, Malaysia, Canada, Italia, Prancis, UAE, India, Al Jazeera, **Polandia, Ceko**) · open-epg.com · AqFad2811/epg (Indonesia, Malaysia, Singapore, Brunei, Astro, Sooka, RTM, dll).
+**Sumber EPG:** epgshare01.online (Indonesia, Singapura, Malaysia) · open-epg.com · AqFad2811/epg (Indonesia, Malaysia, Singapura, Brunei, Astro, Sooka, RTM, dll).
 
 Channel tanpa jadwal asli tetap dibuatkan entry placeholder supaya terbaca semua IPTV player.
 
@@ -166,7 +160,7 @@ Source M3U (×2) → merge_source → merge_extra → merge_international → cl
 - ✅ Tarik source terbaru + sanitasi link
 - ✅ **URL source disimpan di GitHub Secrets** (`PLAYLIST_SOURCE`, `PLAYLIST_SOURCE_2`) — tidak pernah ditulis di kode
 - ✅ **Channel Piala Dunia 2026 & Bola Indonesia selalu di-inject ulang** (tidak pernah terhapus)
-- ✅ Tambah channel internasional dari [iptv-org](https://github.com/iptv-org/iptv) (27 negara)
+- ✅ Tambah channel Asia Tenggara dari [iptv-org](https://github.com/iptv-org/iptv) (ASEAN)
 - ✅ Deduplikasi + **buang channel mati otomatis lewat `blocklist.txt`** + fix syntax M3U
 - ✅ Generate playlist OTT-friendly (HLS, non-DRM)
 - ✅ Generate EPG XMLTV multi-source (19 sumber)
@@ -179,8 +173,8 @@ Trigger manual: tab **Actions** → **Auto Update IPTV Playlist** → **Run work
 ## 📁 Struktur Repo
 
 ```
-├── dhanytv.m3u                 # Playlist utama (1040+ channel)
-├── dhanytv-ott.m3u             # Playlist OTT-friendly (730+ channel, non-DASH/DRM)
+├── okmansyahtv.m3u                 # Playlist utama (1040+ channel)
+├── okmansyahtv-ott.m3u             # Playlist OTT-friendly (730+ channel, non-DASH/DRM)
 ├── epg.xml                     # EPG XMLTV (auto-generated, ~9 MB)
 ├── LICENSE                     # MIT License
 ├── DISCLAIMER.md               # Catatan hukum / DMCA
@@ -204,10 +198,10 @@ Trigger manual: tab **Actions** → **Auto Update IPTV Playlist** → **Run work
 ## 🛠️ Development
 
 ```bash
-git clone https://github.com/dhasap/dhanytv.git && cd dhanytv
+git clone https://github.com/dhasap/okmansyahtv.git && cd okmansyahtv
 
 # Merge dari source
-python3 update-script/merge_source.py <source.m3u> --target dhanytv.m3u
+python3 update-script/merge_source.py <source.m3u> --target okmansyahtv.m3u
 
 # Inject channel kurasi (World Cup, Bola Indonesia)
 python3 update-script/merge_extra.py
@@ -216,10 +210,10 @@ python3 update-script/merge_extra.py
 python3 update-script/merge_international.py
 
 # Cleanup + generate OTT
-python3 update-script/cleanup_playlist.py dhanytv.m3u --write --ott-output dhanytv-ott.m3u --check
+python3 update-script/cleanup_playlist.py okmansyahtv.m3u --write --ott-output okmansyahtv-ott.m3u --check
 
 # Generate EPG multi-source
-python3 update-script/generate_epg.py --m3u dhanytv.m3u --output epg.xml
+python3 update-script/generate_epg.py --m3u okmansyahtv.m3u --output epg.xml
 
 # Atau semua langkah sekaligus:
 bash update-script/update_playlist.sh -s "<source_url>" -t "<github_token>"
@@ -240,13 +234,13 @@ Channel manual (yang tidak ada di source) ditambahkan di **`update-script/extra_
 <details>
 <summary><b>Channel bola muncul "siaran ini tidak didukung", kenapa?</b></summary>
 
-Channel itu format **DASH + DRM ClearKey**. Player seperti VLC dan player bawaan Smart TV tidak bisa dekripsi DRM. Pakai **TiviMate**, **OTT Navigator**, atau **Kodi** (+ InputStream Adaptive), atau pilih channel HLS (non-DRM) di grup **Indonesia Channels**.
+Channel itu format **DASH + DRM ClearKey**. Player seperti VLC and player bawaan Smart TV tidak bisa dekripsi DRM. Pakai **TiviMate**, **OTT Navigator**, atau **Kodi** (+ InputStream Adaptive), atau pilih channel HLS (non-DRM) di grup **Indonesia Channels**.
 </details>
 
 <details>
 <summary><b>Apakah ini gratis?</b></summary>
 
-Ya, 100% gratis dan open-source. Tidak perlu langganan, login, atau bayar.
+Ya, 100% gratis and open-source. Tidak perlu langganan, login, atau bayar.
 </details>
 
 <details>
@@ -301,16 +295,16 @@ Repo ini **tidak meng-host, meng-upload, atau menyimpan konten media apa pun**. 
 
 Star membantu lebih banyak orang menemukan playlist IPTV Indonesia gratis ini.
 
-<a href="https://star-history-virid.vercel.app/?repo=dhasap/dhanytv">
+<a href="https://star-history-virid.vercel.app/?repo=dhasap/okmansyahtv">
  <picture>
-   <source media="(prefers-color-scheme: dark)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/dhanytv&theme=dark" />
-   <source media="(prefers-color-scheme: light)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/dhanytv&theme=light" />
-   <img alt="Star History Chart" src="https://star-history-virid.vercel.app/chart?repo=dhasap/dhanytv&theme=light" />
+   <source media="(prefers-color-scheme: dark)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=dark" />
+   <source media="(prefers-color-scheme: light)" srcset="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=light" />
+   <img alt="Star History Chart" src="https://star-history-virid.vercel.app/chart?repo=dhasap/okmansyahtv&theme=light" />
  </picture>
 </a>
 
-**Kata kunci:** IPTV Indonesia gratis · playlist M3U Indonesia · M3U8 TV Indonesia · TV online gratis · EPG XMLTV Indonesia · nonton Piala Dunia 2026 gratis · IPTV Smart TV · TiviMate Indonesia · Kodi IPTV · VLC IPTV playlist · streaming bola Indonesia
+**Kata kunci:** IPTV Indonesia gratis · IPTV Asia Tenggara · ASEAN IPTV · playlist M3U Indonesia · M3U8 TV Indonesia · TV online gratis · EPG XMLTV Indonesia · IPTV Smart TV · TiviMate Indonesia · Kodi IPTV · VLC IPTV playlist · streaming bola Indonesia
 
-Made with ❤️ for Indonesian IPTV enthusiasts · [github.com/dhasap/dhanytv](https://github.com/dhasap/dhanytv)
+Made with ❤️ for Indonesian IPTV enthusiasts · [github.com/dhasap/okmansyahtv](https://github.com/dhasap/okmansyahtv)
 
 </div>

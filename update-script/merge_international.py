@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
-"""Merge international channels from iptv-org/iptv into dhanytv.m3u.
+"""Merge international channels from iptv-org/iptv into okmansyahtv.m3u.
 
 Downloads country-specific playlists, filters duplicates, and appends
-curated channels to the existing dhanytv playlist.
+curated channels to the existing okmansyahtv playlist.
 """
 
 from __future__ import annotations
@@ -15,36 +15,19 @@ from pathlib import Path
 
 # ── Target countries ──────────────────────────────────────────
 # (country_code, group_name, max_channels)
-# Countries already in dhanytv: ID, MY, SG, CN, KR (partial), BN
+# ASEAN (Southeast Asia) focus only.
 TARGET_COUNTRIES = [
-    ("jp", "Japan", 30),
-    ("kr", "Korea", 20),
-    ("in", "India", 25),
-    ("th", "Thailand", 15),
-    ("ph", "Philippines", 10),
-    ("vn", "Vietnam", 10),
-    ("tr", "Turkey", 20),
-    ("pk", "Pakistan", 10),
-    ("bd", "Bangladesh", 8),
-    ("ir", "Iran", 8),
-    ("ae", "UAE & Arab", 15),
-    ("eg", "Egypt", 10),
-    ("sa", "Saudi Arabia", 8),
-    ("ng", "Nigeria", 10),
-    ("za", "South Africa", 8),
-    ("ke", "Kenya", 5),
-    # iptv-org uses the exceptional country slug "uk" for United Kingdom.
-    ("uk", "United Kingdom", 20),
-    ("us", "United States", 25),
-    ("de", "Germany", 15),
-    ("fr", "France", 15),
-    ("es", "Spain", 10),
-    ("it", "Italy", 10),
-    ("br", "Brazil", 20),
-    ("mx", "Mexico", 15),
-    ("ar", "Argentina", 10),
-    ("co", "Colombia", 8),
-    ("ru", "Russia", 15),
+    ("id", "Indonesia", 100),
+    ("my", "Malaysia", 50),
+    ("sg", "Singapore", 30),
+    ("th", "Thailand", 30),
+    ("vn", "Vietnam", 30),
+    ("ph", "Philippines", 30),
+    ("bn", "Brunei", 10),
+    ("kh", "Cambodia", 15),
+    ("la", "Laos", 10),
+    ("mm", "Myanmar", 15),
+    ("tl", "East Timor", 5),
 ]
 
 IPTV_ORG_BASE = "https://iptv-org.github.io/iptv/countries"
@@ -105,7 +88,7 @@ def parse_m3u(lines: list[str]) -> list[dict]:
 
 
 def read_existing_tvg_ids(m3u_path: Path) -> set[str]:
-    """Read existing tvg-ids and names from dhanytv.m3u."""
+    """Read existing tvg-ids and names from okmansyahtv.m3u."""
     existing = set()
     if not m3u_path.exists():
         return existing
@@ -297,7 +280,7 @@ def main() -> int:
     parser.add_argument("--ci", action="store_true", help="CI mode: never fail, exit 0 even on errors")
     args = parser.parse_args()
 
-    m3u_path = Path("dhanytv.m3u")
+    m3u_path = Path("okmansyahtv.m3u")
 
     if not m3u_path.exists():
         print(f"ERROR: {m3u_path} not found")

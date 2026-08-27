@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""Inject curated extra channels into dhanytv.m3u.
+"""Inject curated extra channels into okmansyahtv.m3u.
 
-The weekly auto-update REPLACES dhanytv.m3u with a freshly downloaded source
+The weekly auto-update REPLACES okmansyahtv.m3u with a freshly downloaded source
 (see merge_source.py). Any channel that is not in that source — World Cup feeds,
 event channels, anything hand-added — would silently disappear every Monday.
 
@@ -151,8 +151,8 @@ def inject(target: Path, extras: Path) -> dict:
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Inject curated extra channels into dhanytv.m3u")
-    parser.add_argument("--target", default="dhanytv.m3u", help="Target playlist (default: dhanytv.m3u)")
+    parser = argparse.ArgumentParser(description="Inject curated extra channels into okmansyahtv.m3u")
+    parser.add_argument("--target", default="okmansyahtv.m3u", help="Target playlist (default: okmansyahtv.m3u)")
     parser.add_argument("--extras", default="update-script/extra_channels.m3u",
                         help="Extra channels file (default: update-script/extra_channels.m3u)")
     parser.add_argument("--ci", action="store_true", help="CI mode: never fail, exit 0 even on errors")

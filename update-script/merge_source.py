@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Merge and sanitize a source M3U playlist into dhanytv.m3u.
+"""Merge and sanitize a source M3U playlist into okmansyahtv.m3u.
 
 Handles:
   - Source trace removal (sanitization patterns)
@@ -37,7 +37,7 @@ CHANNEL_TO_EPG: dict[str, str] = {
     "TVRI": "TVRI.id", "BTV": "BTV.id",
     "CNN Indonesia": "CNNIndonesia.id",
     "CNBC Indonesia": "CNBCIndonesia.id",
-    "DAAI TV": "DAAITV.id",
+    "DAAITV.id": "DAAITV.id",
     "RTV": "RTV.id", "Nusantara TV": "NusantaraTV.id",
     "Garuda TV": "GarudaTV.id", "BN Channel": "BNChannel.id",
     "MAGNA Channel": "MagnaChannel.id",
@@ -86,8 +86,7 @@ CHANNEL_TO_EPG: dict[str, str] = {
     "ONE": "ONE.id", "Arirang": "Arirang.id",
     "Sportstars": "Sportstars.id", "Sportstars 2": "Sportstars2.id",
     "Sportstars 3": "Sportstars3.id", "Sportstars 4": "Sportstars4.id",
-    "HGTV": "HGTV.id",
-    "CNN": "CNN", "BBC News": "BBCNews",
+    "HGTV": "HGTV.id", "CNN": "CNN", "BBC News": "BBCNews",
     "Discovery Channel": "DiscoveryChannel", "Discovery": "DiscoveryChannel",
     "Cartoon Network": "CartoonNetwork", "Animal Planet": "Animal Planet",
     "Berita RTM": "Berita RTM", "TV1": "TV1", "TV2": "TV2",
@@ -564,10 +563,10 @@ def main() -> int:
     import argparse
 
     parser = argparse.ArgumentParser(
-        description="Merge source M3U into dhanytv with sanitization"
+        description="Merge source M3U into okmansyahtv with sanitization"
     )
     parser.add_argument("source", help="Source M3U file to merge from")
-    parser.add_argument("--target", default="dhanytv.m3u", help="Target playlist (default: dhanytv.m3u)")
+    parser.add_argument("--target", default="okmansyahtv.m3u", help="Target playlist (default: okmansyahtv.m3u)")
     parser.add_argument(
         "--sanitize",
         default="",

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate dhanytv custom XMLTV EPG with multi-source fallback coverage.
+"""Generate okmansyahtv custom XMLTV EPG with multi-source fallback coverage.
 
 Sources (in priority order for programme data):
   1. epgshare01.online — ID1, SG1, MY1, CA2, IT1, FR1, AE1, IN1, ALJAZEERA1
@@ -290,8 +290,7 @@ class PlaylistChannel:
 
 
 EPG_ID_SUFFIXES = (
-    ".ca2", ".id", ".my", ".sg", ".ca", ".fr", ".ae", ".in", ".uk",
-    ".au", ".us", ".de", ".it", ".es", ".br", ".mx", ".ar", ".co",
+    ".id", ".my", ".sg", ".th", ".vn", ".ph", ".bn", ".kh", ".la", ".mm", ".tl",
 )
 
 
@@ -498,7 +497,7 @@ def make_channel_element(info: PlaylistChannel) -> ET.Element:
     if info.logo:
         ET.SubElement(channel, "icon", {"src": info.logo})
     url = ET.SubElement(channel, "url")
-    url.text = "https://github.com/dhasap/dhanytv"
+    url.text = "https://github.com/dhasap/okmansyahtv"
     return channel
 
 
@@ -661,8 +660,8 @@ def generate(m3u_path: Path, output_path: Path, source_paths: list[Path]) -> dic
     root = ET.Element(
         "tv",
         {
-            "generator-info-name": "dhanytv-custom-epg",
-            "generator-info-url": "https://github.com/dhasap/dhanytv",
+            "generator-info-name": "okmansyahtv-custom-epg",
+            "generator-info-url": "https://github.com/dhasap/okmansyahtv",
         },
     )
 
@@ -741,8 +740,8 @@ def generate(m3u_path: Path, output_path: Path, source_paths: list[Path]) -> dic
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Generate dhanytv XMLTV EPG with fallback coverage")
-    parser.add_argument("--m3u", default="dhanytv.m3u", help="Input M3U playlist")
+    parser = argparse.ArgumentParser(description="Generate okmansyahtv XMLTV EPG with fallback coverage")
+    parser.add_argument("--m3u", default="okmansyahtv.m3u", help="Input M3U playlist")
     parser.add_argument("--output", default="epg.xml", help="Output XMLTV file")
     parser.add_argument(
         "--sources",

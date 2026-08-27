@@ -1,4 +1,4 @@
-/* dhanytv web — dark-first IPTV interface */
+/* okmansyahtv web — dark-first IPTV interface */
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
 
 :root {
@@ -262,15 +262,75 @@ button { font-family: inherit; cursor: pointer; }
 footer.app-footer { border-top: 1px solid var(--border-soft); padding: 22px 20px; color: var(--text-muted); font-size: .79rem; text-align: center; }
 footer.app-footer a { color: var(--accent); }
 
+/* ---------- Country Grid ---------- */
+.country-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  margin-top: 10px;
+}
+.country-card {
+  background: var(--surface);
+  border: 1px solid var(--border-soft);
+  border-radius: var(--radius);
+  padding: 20px 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  transition: transform .13s ease, border-color .13s, box-shadow .13s;
+  color: var(--text);
+}
+.country-card:hover {
+  transform: translateY(-4px);
+  border-color: var(--accent);
+  box-shadow: var(--shadow-lg);
+}
+.country-card:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px var(--accent);
+}
+.flag-wrap {
+  width: 80px;
+  aspect-ratio: 4/3;
+  border-radius: 6px;
+  overflow: hidden;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+  background: var(--bg-2);
+}
+.flag-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.icon-wrap {
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  background: var(--surface-2);
+  color: var(--accent);
+}
+.country-card span {
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+.country-card small {
+  color: var(--text-muted);
+  font-size: 0.75rem;
+}
+
 /* ---------- Responsive ---------- */
+
 .mobile-only { display: none; }
 @media (max-width: 980px) { .nav { display: none; } }
 @media (max-width: 860px) {
   .sidebar { display: none; }
-  .mobile-only { display: flex; }
+  .mobile-only { display: none; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(138px, 1fr)); gap: 9px; }
   .search-wrap { max-width: none; }
   .brand small { display: none; }
   .install-btn { display: none; }
+  .country-grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); gap: 12px; }
+  .flag-wrap { width: 60px; }
 }
 @media (min-width: 1800px) { .grid { grid-template-columns: repeat(auto-fill, minmax(198px,1fr)); } }

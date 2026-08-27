@@ -1,4 +1,4 @@
-// m3u.js — parser M3U/M3U8 untuk dhanytv
+// m3u.js — parser M3U/M3U8 untuk okmansyahtv
 // Mendukung #EXTINF (tvg-id, tvg-logo, group-title, nama),
 // #EXTVLCOPT (http-referrer / http-user-agent / http-origin),
 // dan #KODIPROP (inputstream.adaptive.license_type / license_key).
